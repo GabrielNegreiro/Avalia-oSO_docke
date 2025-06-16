@@ -36,8 +36,13 @@
                 <td>{{ usuario.cpf }}</td>
                 <td>{{ usuario.cargo }}</td>
                 <td>
-                    <a href="#" class="btn btn-primary" > <i class="bi bi-pencil-fill"></i> </a>
-                    <a href="#" class="btn btn-danger" > <i class="bi bi-trash-fill"></i> </a>
+                    <a href="{% url 'editar_usuario' usuario.id %}" class="btn btn-primary" > 
+                        <i class="bi bi-pencil-fill"></i> 
+                    </a>
+
+                    <a href="{% url 'excluir_usuario' usuario.id %}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este usuário?')" >
+                         <i class="bi bi-trash-fill"></i> 
+                    </a>
                 </td>
             </tr>
             {%empty%}
