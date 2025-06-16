@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_list_or_404
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth.hashers import make_password
 from .forms import usuarioForm
 from .models import usuario
@@ -21,22 +21,21 @@ def cadastra_usuario(request):
         form = usuarioForm()
     return render(request, 'index.html', {'form': form})
 
-'''def cadastra_usuario(request):
-    if request.method == 'POST':
-        nome = request.POST.get('nome')
-        email = request.POST.get('email')
-        cpf = request.POST.get('cpf')
-        senha = request.POST.get('senha')
-        setor = request.POST.get('setor')
-        usuario.objects.create(
-            nome=nome,
-            email=email,
-            cpf=cpf,
-            senha=senha,
-            cargo=setor
-        )
-        return redirect('entrou')
-    return render(request, 'index.html')
+def excluir_usuario(request, id):
+    usuario_obj = get_object_or_404(usuario, id=id)
+    usuario_obj.delete()
+    return redirect('entrou') 
 
-def entrou(request):
-    return render(request, 'entrou.html')'''
+def editar_usuario(request, id):
+    usuario_obj = get_object_or_404(usuario, id=id)
+    
+    if request.method == 'POST':
+        form = usuarioForm(request.POST, instance=usuario_obj)
+        if form.is_valid():
+            form.save()
+            return redirect('entrou')
+    else:
+        form = usuarioForm(instance=usuario_obj)
+
+    return render(request, 'editar.html', {'form': form, 'usuario': usuario_obj})
+

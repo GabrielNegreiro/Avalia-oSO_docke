@@ -64,9 +64,11 @@ class usuarioForm(forms.ModelForm):
                 self.add_error('senha', "A senha deve conter pelo menos um número.")
             if not re.search(r'[!@#$%^&*(),.?":{}|<>_\-+=/\\[\]~`]', senha):
                 self.add_error('senha', "A senha deve conter pelo menos um caractere especial.")
-        if not self.errors.get('senha'):
-            cleaned_data['senha'] = make_password(senha)
-
+        '''if not self.errors.get('senha'):
+            cleaned_data['senha'] = make_password(senha)'''
+        '''else:
+        # Remover o campo se não foi passado, para não sobrescrever a senha
+            cleaned_data.pop('senha', None)'''
         return cleaned_data
 
 
