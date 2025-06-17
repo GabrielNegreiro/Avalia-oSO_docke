@@ -14,41 +14,77 @@
 <body>
 <div class="container">
     <h2>Editar Usuário: {{ usuario.nome }}</h2>
-   <form method="post">
-    {% csrf_token %}
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" name="nome" class="form-control" value="{{ form.nome.value|default_if_none:'' }}">
+            {% if form.nome.errors %}
+                <div class="text-danger">
+                    {% for error in form.nome.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-    <div class="mb-3">
-        <label for="id_nome" class="form-label">Nome</label>
-        {{ form.nome }}
-    </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" value="{{ form.email.value|default_if_none:'' }}">
+            {% if form.email.errors %}
+                <div class="text-danger">
+                    {% for error in form.email.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-    <div class="mb-3">
-        <label for="id_email" class="form-label">Email</label>
-        {{ form.email }}
-    </div>
+        <div class="mb-3">
+            <label for="cpf" class="form-label">CPF</label>
+            <input type="text" name="cpf" class="form-control" value="{{ form.cpf.value|default_if_none:'' }}">
+            {% if form.cpf.errors %}
+                <div class="text-danger">
+                    {% for error in form.cpf.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-    <div class="mb-3">
-        <label for="id_cpf" class="form-label">CPF</label>
-        {{ form.cpf }}
-    </div>
+        <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" name="senha" class="form-control">
+            {% if form.senha.errors %}
+                <div class="text-danger">
+                    {% for error in form.senha.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-    <div class="mb-3">
-        <label for="id_senha" class="form-label">Senha</label>
-        {{ form.senha }}
-    </div>
+        <div class="mb-3">
+            <label for="cargo" class="form-label">Cargo</label>
+            <select name="cargo" class="form-select">
+                <option value="">Selecione o cargo</option>
+                <option value="administrador" {% if form.cargo.value == "administrador" %}selected{% endif %}>Administrador</option>
+                <option value="usuario" {% if form.cargo.value == "usuario" %}selected{% endif %}>Usuário</option>
+                <option value="programador" {% if form.cargo.value == "programador" %}selected{% endif %}>Programador</option>
+            </select>
+            {% if form.cargo.errors %}
+                <div class="text-danger">
+                    {% for error in form.cargo.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
 
-
-    <div class="mb-3">
-        <label for="id_cargo" class="form-label">Cargo</label>
-        {{ form.cargo }}
-    </div>
-
-    <!-- Não colocar form.senha aqui -->
-
-    <button type="submit" class="btn btn-success">Salvar Alterações</button>
-    <a href="{% url 'entrou' %}" class="btn btn-secondary">Cancelar</a>
-</form>
-
+        <button type="submit" class="btn btn-success">Salvar Alterações</button>
+        <a href="{% url 'entrou' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
 </div>
 </body>
 </html>
